@@ -1649,7 +1649,6 @@
         }
 
 
-        // 格式化匹配详情JSON为压缩的一段话显示
         // 格式化匹配详情JSON为压缩的一段话显示，支持两种匹配类型
         function formatMatchDetails(jsonString) {
             if (!jsonString || jsonString.trim() === '') {
@@ -1671,10 +1670,14 @@
                     
                     const matchSummary = data.matchedItems.slice(0, 3).map(match => {
                         if (match.name && match.score) {
-                            return `${match.name}(${match.score}分)`;
+                            let summary = `${match.name}(${match.score}分)`;
+                            if (match.reason) {
+                                summary += ` - ${match.reason}`;
+                            }
+                            return summary;
                         }
                         return null;
-                    }).filter(Boolean).join(', ');
+                    }).filter(Boolean).join('; ');
                     
                     detailsHtml += matchSummary;
                     detailsHtml += '</div>';
@@ -1692,10 +1695,14 @@
                     
                     const matchSummary = data.allCandidates.slice(0, 3).map(candidate => {
                         if (candidate.name && candidate.score) {
-                            return `${candidate.name}(${candidate.score}分)`;
+                            let summary = `${candidate.name}(${candidate.score}分)`;
+                            if (candidate.reason) {
+                                summary += ` - ${candidate.reason}`;
+                            }
+                            return summary;
                         }
                         return null;
-                    }).filter(Boolean).join(', ');
+                    }).filter(Boolean).join('; ');
                     
                     detailsHtml += matchSummary;
                     detailsHtml += '</div>';
@@ -1711,10 +1718,14 @@
                         
                         const matchSummary = data.matchedItems.slice(0, 3).map(match => {
                             if (match.name && match.score) {
-                                return `${match.name}(${match.score}分)`;
+                                let summary = `${match.name}(${match.score}分)`;
+                                if (match.reason) {
+                                    summary += ` - ${match.reason}`;
+                                }
+                                return summary;
                             }
                             return null;
-                        }).filter(Boolean).join(', ');
+                        }).filter(Boolean).join('; ');
                         
                         detailsHtml += matchSummary;
                         detailsHtml += '</div>';
