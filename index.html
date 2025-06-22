@@ -945,6 +945,10 @@
                         <input type="text" id="caseProjectFilter" placeholder="搜索项目ID...">
                     </div>
                     <div class="filter-group">
+                        <label for="caseProjectTitleFilter">案件名称:</label>
+                        <input type="text" id="caseProjectTitleFilter" placeholder="搜索案件名称...">
+                    </div>
+                    <div class="filter-group">
                         <label for="caseContactFilter">联系人:</label>
                         <input type="text" id="caseContactFilter" placeholder="搜索联系人...">
                     </div>
@@ -1969,9 +1973,10 @@
                 if (tabName === 'case') {
                     const processedFilter = document.getElementById('caseProcessedFilter').value;
                     const projectFilter = document.getElementById('caseProjectFilter').value.toLowerCase();
+                    const projectTitleFilter = document.getElementById('caseProjectTitleFilter').value.toLowerCase();
                     const contactFilter = document.getElementById('caseContactFilter').value.toLowerCase();
                     const dateFilter = document.getElementById('caseDateFilter').value;
-
+                
                     if (processedFilter) {
                         const processedStatus = (row[0] || '').toString();
                         if (processedFilter === '已处理') {
@@ -1984,17 +1989,22 @@
                             }
                         }
                     }
-
+                
                     if (projectFilter && include) {
                         const projectId = (row[3] || '').toString().toLowerCase();
                         if (!projectId.includes(projectFilter)) include = false;
                     }
-
+                
+                    if (projectTitleFilter && include) {
+                        const projectTitle = (row[4] || '').toString().toLowerCase();
+                        if (!projectTitle.includes(projectTitleFilter)) include = false;
+                    }
+                
                     if (contactFilter && include) {
                         const contactPerson = (row[8] || '').toString().toLowerCase();
                         if (!contactPerson.includes(contactFilter)) include = false;
                     }
-
+                
                     if (dateFilter && include) {
                         const startTime = row[7] || '';
                         if (startTime && !startTime.includes(dateFilter)) include = false;
@@ -2066,6 +2076,7 @@
             if (tabName === 'case') {
                 document.getElementById('caseProcessedFilter').value = '';
                 document.getElementById('caseProjectFilter').value = '';
+                document.getElementById('caseProjectTitleFilter').value = '';
                 document.getElementById('caseContactFilter').value = '';
                 document.getElementById('caseDateFilter').value = '';
             } else if (tabName === 'talent') {
@@ -2196,7 +2207,7 @@
             // Add filter enter key events for each tab
             ['case', 'talent', 'matching'].forEach(tab => {
                 const filterIds = {
-                    case: ['caseProcessedFilter', 'caseProjectFilter', 'caseContactFilter', 'caseDateFilter'],
+                    case: ['caseProcessedFilter', 'caseProjectFilter', 'caseProjectTitleFilter', 'caseContactFilter', 'caseDateFilter'],
                     talent: ['talentSkillFilter', 'talentLocationFilter', 'talentExperienceFilter', 'talentNameFilter'],
                     matching: ['matchingTalentFilter', 'matchingQueryFilter', 'matchingScoreFilter', 'matchingDateFilter']
                 };
